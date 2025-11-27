@@ -1,0 +1,22 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+/* Common styles */
+@import url('./reset.css');
+@import url('./base.css');
+@import url('./container.css');
+
+/* Sections style */
+@import url('./header.css');
+@import url('./loader.css');
+@import url('./form.css');
+@import url('./gallery.css');
+
+/* iziToast style */
+@import "izitoast/dist/css/iziToast.min.css";
+
+/* Simplelightbox style */
+@import "simplelightbox/dist/simple-lightbox.min.css";
