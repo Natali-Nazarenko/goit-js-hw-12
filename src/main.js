@@ -1,9 +1,17 @@
 import iziToast from "izitoast";
 import getImagesByQuery from "./js/pixabay-api";
-import {showLoader, hideLoader, createGallery } from "./js/render-functions";
+import {
+    btnLoad,
+    showLoader,
+    hideLoader,
+    createGallery,
+    showLoadMoreButton,
+    hideLoadMoreButton
+    } from "./js/render-functions";
 
 
 const form = document.querySelector('.form');
+const page = 1;
 
 const errorText = {
     user: {
@@ -37,8 +45,10 @@ form.addEventListener('submit', (ev) => {
 
     showLoader();
 
-    getImagesByQuery(inputData.get('search-text').trim())
-        .then((data) => {
+    getImagesByQuery(inputData.get('search-text').trim(), page)
+        .then(({ data }) => {
+            console.log(data);
+            
             if (data.total === 0) return validInput(errorText.api);
             createGallery(data.hits);
         })
@@ -46,8 +56,13 @@ form.addEventListener('submit', (ev) => {
             console.log(error.message);
         })
         .finally(() =>
-            hideLoader()
+            hideLoader(),
+            showLoadMoreButton()
         );
     
     ev.target.reset();
+})
+
+btnLoad.addEventListener('click', () => {
+    page++;
 })

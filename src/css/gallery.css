@@ -49,3 +49,12 @@
 .statistic-block p{
     font-weight: bold;
 }
+
+.btn-load {
+    display: block;
+    margin: 20px auto;
+}
+
+.hidden{
+  display: none;
+}
