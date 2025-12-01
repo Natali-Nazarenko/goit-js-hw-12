@@ -6,12 +6,17 @@ import {
     hideLoader,
     createGallery,
     showLoadMoreButton,
-    hideLoadMoreButton
+    hideLoadMoreButton,
+    gallery,
+    lightbox
     } from "./js/render-functions";
 
 
 const form = document.querySelector('.form');
-const page = 1;
+const per_page = 15;
+let totalPages;
+let query;
+let page = 1;
 
 const errorText = {
     user: {
@@ -34,35 +39,50 @@ function validInput({ title, message}) {
     });
 }
 
-form.addEventListener('submit', (ev) => {
+form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
     const inputData = new FormData(form);
+    query = inputData.get('search-text').trim();
     
-    if (inputData.get('search-text').trim() === '') {
+    if (query === '') {
         return validInput(errorText.user);
     }
 
     showLoader();
 
-    getImagesByQuery(inputData.get('search-text').trim(), page)
-        .then(({ data }) => {
-            console.log(data);
-            
-            if (data.total === 0) return validInput(errorText.api);
-            createGallery(data.hits);
-        })
-        .catch((error) => {
+    try { 
+        const { data } = await getImagesByQuery(query, page);
+
+        totalPages = Math.ceil(data.total / per_page);
+        console.log(totalPages);
+        
+        
+        if (data.total === 0 && data.hits.length === 0) return validInput(errorText.api);
+        
+        const markup = createGallery(data.hits);
+        gallery.innerHTML = markup;
+
+        lightbox.refresh();
+        if (data.hits.length >= per_page) return showLoadMoreButton();
+        
+    }catch (error) {
             console.log(error.message);
-        })
-        .finally(() =>
-            hideLoader(),
-            showLoadMoreButton()
-        );
+    }finally {
+        hideLoader(); 
+    }
     
     ev.target.reset();
 })
 
-btnLoad.addEventListener('click', () => {
-    page++;
+btnLoad.addEventListener('click', async () => {
+    ++page;
+    if (page === totalPages) { 
+        hideLoadMoreButton();
+    }
+    const result = await getImagesByQuery(query, page);
+    const markup = createGallery(result.data.hits);
+    gallery.insertAdjacentHTML('beforeend', markup);
+
+    lightbox.refresh();
 })

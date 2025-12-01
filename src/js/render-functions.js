@@ -1,21 +1,18 @@
 import SimpleLightbox from 'simplelightbox';
 
 export const gallery = document.querySelector('.gallery');
+export const btnLoad = document.querySelector('.btn-load');
 const loader = document.querySelector('.loader');
-export const btnLoad = document.querySelector('.btn-load')
 
-const lightbox = new SimpleLightbox('.gallery a', {
+
+export const lightbox = new SimpleLightbox('.gallery a', {
         captionsData: 'alt',
         captionPosition: 'bottom',
         captionDelay: 250,
     });
 
 export function createGallery(hits) {
-    clearGallery();
-    const markup = hits.map(imageTemplate).join('');
-    gallery.insertAdjacentHTML('afterbegin', markup);
-
-    lightbox.refresh();
+    return hits.map(imageTemplate).join('');
 }
 
 function imageTemplate(img) {
@@ -42,10 +39,6 @@ function imageTemplate(img) {
                     </li>
                 </ul>
             </li>`
-}
-
-function clearGallery() {
-    gallery.innerHTML = '';
 }
 
 export function showLoader() {
