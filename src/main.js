@@ -57,7 +57,6 @@ form.addEventListener('submit', async (ev) => {
         totalPages = Math.ceil(data.total / per_page);
         console.log(totalPages);
         
-        
         if (data.total === 0 && data.hits.length === 0) return validInput(errorText.api);
         
         const markup = createGallery(data.hits);
