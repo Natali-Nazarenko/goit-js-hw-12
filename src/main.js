@@ -50,20 +50,21 @@ form.addEventListener('submit', async (ev) => {
     }
 
     showLoader();
+    hideLoadMoreButton();
 
-    try { 
+    try {
         const { data } = await getImagesByQuery(query, page);
 
         totalPages = Math.ceil(data.total / per_page);
-        console.log(totalPages);
         
-        if (data.total === 0 && data.hits.length === 0) return validInput(errorText.api);
+        if (data.total === 0 || data.hits.length === 0) return validInput(errorText.api);
         
         const markup = createGallery(data.hits);
         gallery.innerHTML = markup;
 
         lightbox.refresh();
-        if (data.hits.length >= per_page) return showLoadMoreButton();
+
+        if (data.hits.length === per_page) return showLoadMoreButton();
         
     }catch (error) {
             console.log(error.message);
