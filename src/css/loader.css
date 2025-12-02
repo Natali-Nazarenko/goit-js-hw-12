@@ -1,37 +1,13 @@
-/* HTML: <div class="loader"></div> */
 .loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display: grid;
-  border: 4px solid #0000;
-  border-radius: 50%;
-  border-color: #ccc #0000;
-  animation: l16 1s infinite linear;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 15px;
+  clip-path: inset(0 3ch 0 0);
+  animation: l4 1s steps(4) infinite;
+  margin-bottom: 10px;
 }
-.loader::before,
-.loader::after {    
-  content: "";
-  grid-area: 1/1;
-  margin: 2px;
-  border: inherit;
-  border-radius: 50%;
+.loader:before {
+  content:"Loading images, please wait..."
 }
-.loader::before {
-  border-color: #f03355 #0000;
-  animation: inherit; 
-  animation-duration: .5s;
-  animation-direction: reverse;
-}
-.loader::after {
-  margin: 8px;
-}
-@keyframes l16 { 
-  100%{transform: rotate(1turn)}
-}
-
-.hidden{
-  display: none;
-}
+@keyframes l4 {to{clip-path: inset(0 -1ch 0 0)}}

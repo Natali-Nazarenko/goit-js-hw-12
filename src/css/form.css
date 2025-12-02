@@ -5,28 +5,28 @@
 
 .input-form {
     width: 272px;
-height: 40px;
-font-weight: 400;
-font-size: 16px;
-line-height: 1.5;
-letter-spacing: 0.04em;
-border: 1px solid #808080;
-border-radius: 4px;
-color: #808080;
+    height: 40px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    border: 1px solid #808080;
+    border-radius: 4px;
+    color: #808080;
 }
 
 .btn {
-border-radius: 8px;
-border: none;
-padding: 8px 16px;
-width: auto;
-height: 40px;
-background: #4e75ff;
-color: #ffffff;
-font-weight: 500;
-font-size: 16px;
-line-height: 1.5;
-letter-spacing: 0.04em;
+    border-radius: 8px;
+    border: none;
+    padding: 8px 16px;
+    width: auto;
+    height: 40px;
+    background: #4e75ff;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
 }
 
 .btn:hover {

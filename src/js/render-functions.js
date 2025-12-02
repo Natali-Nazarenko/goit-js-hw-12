@@ -12,7 +12,10 @@ export const lightbox = new SimpleLightbox('.gallery a', {
     });
 
 export function createGallery(hits) {
-    return hits.map(imageTemplate).join('');
+    const markup = hits.map(imageTemplate).join('');
+    gallery.insertAdjacentHTML('beforeend', markup);
+
+    lightbox.refresh();
 }
 
 function imageTemplate(img) {
@@ -55,5 +58,9 @@ export function showLoadMoreButton() {
 
 export function hideLoadMoreButton() {
     btnLoad.classList.add('hidden');
+}
+
+export function clearGallery() { 
+    gallery.innerHTML = "";
 }
 
