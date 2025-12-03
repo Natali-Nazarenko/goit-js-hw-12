@@ -72,8 +72,6 @@ function smoothScroll() {
 
 form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
-    clearGallery();
-    showLoader();
     hideLoadMoreButton();
 
     const inputData = new FormData(form);
@@ -82,6 +80,9 @@ form.addEventListener('submit', async (ev) => {
     if (query === '') {
         return validInput(errorText.user);
     }
+
+    clearGallery();
+    showLoader();
 
     try {
         page = 1;
@@ -92,7 +93,6 @@ form.addEventListener('submit', async (ev) => {
         if (data.total === 0 || data.hits.length === 0) return validInput(errorText.api);
 
         createGallery(data.hits);
-        smoothScroll();
 
         if (data.hits.length === per_page && page !== totalPages) return showLoadMoreButton();
         
@@ -111,12 +111,14 @@ btnLoad.addEventListener('click', async () => {
     showLoader();
 
     ++page;
-    if (page === totalPages) { 
-        infoMessage(errorText.endLoad);
-        hideLoadMoreButton();
-    }
     try {
         const data = await getImagesByQuery(query, page);
+        totalPages = Math.ceil(data.total / per_page);
+
+        if (page === totalPages) { 
+            hideLoadMoreButton();
+            infoMessage(errorText.endLoad);
+        }
         createGallery(data.hits);
         smoothScroll();
     } catch (error) {
